@@ -32,7 +32,7 @@ model Books {
   isbn        String
   Loan        Loan?   @relation(fields: [loanId], references: [id])
   loanId      String? @db.ObjectId
-  state       String 
+  state       String  @default("available")
 }
 
 model Loan {
@@ -40,7 +40,7 @@ model Loan {
   userId       String         @db.ObjectId
   back         String
   User         User           @relation(fields: [userId], references: [id])
-  booksId      String        @db.ObjectId
+  booksId      String         @db.ObjectId
   book         Books[]
   notification Notification[]
 }

@@ -43,15 +43,20 @@ const Loan = {
         },
       });
       const updatedBook = await prisma.books.update({
-        where:{
-          id: booksId
+        where: {
+          id: booksId,
         },
-        data:{
-          state:"disponible"
-        }
-      })
+        data: {
+          state: "disponible",
+        },
+      });
       if (Loan && updatedBook)
-        res.status(201).json({ msg: "Book's state updated Successfully and Loan creaed", data: loan });
+        res
+          .status(201)
+          .json({
+            msg: "Book's state updated Successfully and Loan creaed",
+            data: Loan,
+          });
       else res.status(400).json({ msg: "Bad request" });
     } catch (err) {
       console.error(err);
@@ -60,20 +65,20 @@ const Loan = {
 
   updateLoan: async (req: Request, res: Response) => {
     try {
-      const { loan, userId, back }: LoanType = req.body;
+      const { booksId, userId, back }: LoanType = req.body;
       const { LoanId } = req.params;
       const Loan = await prisma.loan.update({
         where: {
           id: LoanId,
         },
         data: {
-          loan,
+          booksId,
           userId,
           back,
         },
       });
       if (Loan)
-        res.status(201).json({ msg: "Book updated Successfully", data: loan });
+        res.status(201).json({ msg: "Book updated Successfully", data: Loan });
       else res.status(404).json({ msg: "loan not found" });
     } catch (err) {
       console.error(err);

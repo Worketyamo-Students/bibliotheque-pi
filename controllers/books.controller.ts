@@ -42,6 +42,7 @@ const Books = {
           description,
           year,
           isbn,
+          state:"available",
         },
       });
       if (books)
